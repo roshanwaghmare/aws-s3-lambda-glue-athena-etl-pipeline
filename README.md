@@ -5,13 +5,13 @@ A serverless, event-driven ETL pipeline that automatically reads nested JSON ord
 The pipeline uses deterministic output filenames so that processing the same source file again overwrites its existing Parquet output instead of creating duplicate files.
 
 # AWS Services Used
-Amazon S3 for raw JSON and curated Parquet storage
-AWS Lambda for serverless ETL processing
-AWS Glue Crawler for schema discovery
-AWS Glue Data Catalog for table metadata
-Amazon Athena for SQL-based data analysis
-Amazon CloudWatch Logs for monitoring and troubleshooting
-AWS IAM for permissions and access control
+Amazon S3 for raw JSON and curated Parquet storage.
+AWS Lambda for serverless ETL processing.
+AWS Glue Crawler for schema discovery.
+AWS Glue Data Catalog for table metadata.
+Amazon Athena for SQL-based data analysis.
+Amazon CloudWatch Logs for monitoring and troubleshooting.
+AWS IAM for permissions and access control.
 
 ---
 
