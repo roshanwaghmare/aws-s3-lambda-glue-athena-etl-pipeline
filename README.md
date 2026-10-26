@@ -1,27 +1,38 @@
-# aws-s3-lambda-glue-athena-etl-pipeline
-The solution automatically processes JSON files uploaded to Amazon S3, transforms nested JSON into a tabular format using AWS Lambda and Pandas, converts the data into Parquet format, stores the output in an S3-based data lake, updates the AWS Glue Data Catalog, and enables querying through Amazon Athena.
+# AWS Serverless JSON-to-Parquet ETL Pipeline
 
-S3 (JSON Upload)
-        |
-        ▼
-S3 Event Notification
-        |
-        ▼
+A serverless, event-driven ETL pipeline that automatically reads nested JSON order data from Amazon S3, transforms it into a tabular structure, converts it to Apache Parquet, catalogs the output with AWS Glue, and makes it queryable using Amazon Athena.
+
+The pipeline uses deterministic output filenames so that processing the same source file again overwrites its existing Parquet output instead of creating duplicate files.
+
+---
+
+## Architecture
+
+```text
+JSON file
+   |
+   v
+Amazon S3 Raw Prefix
+orders_json_incoming/
+   |
+   | S3 ObjectCreated event
+   v
 AWS Lambda
-        |
-        ├── Read JSON
-        ├── Flatten Nested Data
-        ├── Convert to DataFrame
-        ├── Convert to Parquet
-        |
-        ▼
-S3 Data Lake (Parquet)
-        |
-        ▼
+   |
+   |-- Read JSON file
+   |-- Flatten nested order and product data
+   |-- Create Pandas DataFrame
+   |-- Convert DataFrame to Parquet
+   |-- Upload Parquet file
+   v
+Amazon S3 Curated Prefix
+orders_parquet_datalake/
+   |
+   v
 AWS Glue Crawler
-        |
-        ▼
-Glue Data Catalog
-        |
-        ▼
+   |
+   v
+AWS Glue Data Catalog
+   |
+   v
 Amazon Athena
